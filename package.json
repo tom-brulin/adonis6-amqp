@@ -27,6 +27,7 @@
     "precompile": "npm run lint && npm run clean",
     "compile": "tsup-node && tsc --emitDeclarationOnly --declaration",
     "postcompile": "npm run copy:templates",
+    "build": "npm run compile",
     "prepublishOnly": "npm run build",
     "lint": "eslint . --ext=.ts",
     "format": "prettier --write .",
