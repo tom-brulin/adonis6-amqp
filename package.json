@@ -20,7 +20,7 @@
   },
   "scripts": {
     "pretest": "npm run lint",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"No test specified for the moment\"",
     "clean": "del-cli build",
     "typecheck": "tsc --noEmit",
     "copy:templates": "copyfiles --up=1 \"stubs/**/*.stub\" build",
