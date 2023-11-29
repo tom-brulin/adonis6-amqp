@@ -19,6 +19,8 @@
     "node": ">=18.16.0"
   },
   "scripts": {
+    "pretest": "npm run lint",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "del-cli build",
     "typecheck": "tsc --noEmit",
     "copy:templates": "copyfiles --up=1 \"stubs/**/*.stub\" build",
