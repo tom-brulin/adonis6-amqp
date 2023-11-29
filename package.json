@@ -1,0 +1,102 @@
+{
+  "name": "adonis6-amqp",
+  "version": "1.0.0",
+  "description": "AdonisJS 6 AMQP provider",
+  "type": "module",
+  "main": "build/index.js",
+  "files": [
+    "build",
+    "!build/bin",
+    "!build/examples",
+    "!build/tests"
+  ],
+  "exports": {
+    ".": "./build/index.js",
+    "./types": "./build/src/types.js",
+    "./amqp_provider": "./build/providers/amqp_provider.js"
+  },
+  "engines": {
+    "node": ">=18.16.0"
+  },
+  "scripts": {
+    "clean": "del-cli build",
+    "typecheck": "tsc --noEmit",
+    "copy:templates": "copyfiles --up=1 \"stubs/**/*.stub\" build",
+    "precompile": "npm run lint && npm run clean",
+    "compile": "tsup-node && tsc --emitDeclarationOnly --declaration",
+    "postcompile": "npm run copy:templates",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint . --ext=.ts",
+    "format": "prettier --write .",
+    "release": "np",
+    "version": "npm run build"
+  },
+  "keywords": [
+    "adonis",
+    "adonisjs",
+    "amqp",
+    "queue",
+    "rabbitmq"
+  ],
+  "author": "tom-brulin",
+  "license": "MIT",
+  "devDependencies": {
+    "@adonisjs/core": "^6.1.5-32",
+    "@adonisjs/eslint-config": "^1.1.9",
+    "@adonisjs/prettier-config": "^1.1.9",
+    "@adonisjs/tsconfig": "^1.1.9",
+    "@types/node": "^20.10.0",
+    "@types/amqplib": "^0.10.4",
+    "@vinejs/vine": "^1.7.0",
+    "eslint": "^8.54.0",
+    "del-cli": "^5.1.0",
+    "np": "^8.0.4",
+    "prettier": "^3.1.0",
+    "ts-node": "^10.9.1",
+    "copyfiles": "^2.4.1",
+    "tsup": "^8.0.1",
+    "typescript": "5.2.2"
+  },
+  "dependencies": {
+    "@poppinss/utils": "^6.5.1",
+    "amqplib": "^0.10.3"
+  },
+  "peerDependencies": {
+    "@adonisjs/core": "^6.1.5-32",
+    "amqplib": "^0.10.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tom-brulin/adonis6-amqp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tom-brulin/adonis6-amqp/issues"
+  },
+  "homepage": "https://github.com/tom-brulin/adonis6-amqp#readme",
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  },
+  "np": {
+    "message": "chore(release): %s",
+    "tag": "latest",
+    "branch": "main",
+    "anyBranch": false
+  },
+  "prettier": "@adonisjs/prettier-config",
+  "eslintConfig": {
+    "extends": "@adonisjs/eslint-config/package"
+  },
+  "tsup": {
+    "entry": [
+      "index.ts",
+      "./providers/amqp_provider.ts"
+    ],
+    "outDir": "./build",
+    "clean": true,
+    "format": "esm",
+    "dts": false,
+    "sourcemap": true,
+    "target": "esnext"
+  }
+}

@@ -1,0 +1,25 @@
+{{{
+  exports({ to: app.configPath('amqp.ts') })
+}}}
+
+import env from '#start/env'
+import { defineConfig } from 'adonis6-amqp'
+
+const amqpConfig = defineConfig({
+  connection: {
+    host: env.get('AMQP_HOST'),
+    port: env.get('AMQP_PORT'),
+    user: env.get('AMQP_USER'),
+    password: env.get('AMQP_PASSWORD'),
+  },
+  queues: {
+    /*
+    'your.queue': {
+      validator: yourValidator,
+      handler: yourQueueHandler,
+    },
+    */
+  },
+})
+
+export default amqpConfig
