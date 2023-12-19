@@ -1,7 +1,7 @@
 import { Channel, ConsumeMessage } from 'amqplib'
-import { E_AMQP_MESSAGE_JSON_PARSE } from './errors.js'
+import { E_AMQP_MESSAGE_JSON_PARSE } from '../errors.js'
 
-export default class AmqpMessage {
+export class AmqpMessage {
   message: ConsumeMessage
 
   constructor(

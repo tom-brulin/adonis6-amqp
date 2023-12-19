@@ -1,17 +1,17 @@
 import { VineValidator } from '@vinejs/vine'
-import { QueueHandler } from './queue_handler.js'
+import { QueueHandler } from './amqp/queue_handler.js'
 
-export interface AmqpConfig {
+export interface Queue {
+  validator: VineValidator<any, any>
+  handler?: typeof QueueHandler
+}
+
+export interface AmqpConfig<KnownQueues extends Record<string, Queue>> {
   connection: {
     host: string
     port: number
     user: string
     password: string
   }
-  queues: {
-    [key: string]: {
-      validator: VineValidator<any, any>
-      handler?: typeof QueueHandler
-    }
-  }
+  queues: KnownQueues
 }
