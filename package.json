@@ -72,7 +72,8 @@
   },
   "peerDependencies": {
     "@adonisjs/core": "^6.1.5-32",
-    "amqplib": "^0.10.3"
+    "amqplib": "^0.10.3",
+    "@vinejs/vine": "^1.7.0"
   },
   "repository": {
     "type": "git",
