@@ -1,7 +1,6 @@
 import { configProvider } from '@adonisjs/core'
 import { ApplicationService } from '@adonisjs/core/types'
 import { RuntimeException } from '@poppinss/utils'
-import { setAmqp } from '../src/services/amqp.js'
 import { AmqpService } from '../index.js'
 import { AmqpManager } from '../src/amqp/amqp_manager.js'
 
@@ -37,10 +36,11 @@ export default class AmqpProvider {
     amqpManager.boot()
 
     /**
-     * Create AMQP service
+     * Register AMQP Service
      */
-    const amqpService = new AmqpService<typeof config.queues>(amqpManager)
-    setAmqp(amqpService)
+    this.app.container.singleton(AmqpService, async () => {
+      return new AmqpService(amqpManager)
+    })
   }
 
   async shutdown() {
