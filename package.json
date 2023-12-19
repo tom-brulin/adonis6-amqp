@@ -1,6 +1,6 @@
 {
   "name": "adonis6-amqp",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "AdonisJS 6 AMQP provider",
   "type": "module",
   "main": "build/index.js",
