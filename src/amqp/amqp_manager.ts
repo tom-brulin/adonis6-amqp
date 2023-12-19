@@ -1,13 +1,13 @@
 import { Channel, Options } from 'amqplib'
 import { AmqpConfig, Queue } from '../types.js'
-import { AmpqConnection } from './amqp_connection.js'
+import { AmqpConnection } from './amqp_connection.js'
 import { AmqpMessage } from './amqp_message.js'
 import { E_AMQP_INVALID_MESSAGE_FORMAT } from '../errors.js'
 import app from '@adonisjs/core/services/app'
 import { errors as vineErrors } from '@vinejs/vine'
 
 export class AmqpManager<KnownQueues extends Record<string, Queue>> {
-  readonly #connection: AmpqConnection
+  readonly #connection: AmqpConnection
   readonly queues: AmqpConfig<KnownQueues>['queues']
 
   #channel: Channel | null = null
@@ -15,7 +15,7 @@ export class AmqpManager<KnownQueues extends Record<string, Queue>> {
 
   constructor(config: AmqpConfig<KnownQueues>) {
     const url = `amqp://${config.connection.user}:${config.connection.password}@${config.connection.host}:${config.connection.port}`
-    this.#connection = new AmpqConnection(url)
+    this.#connection = new AmqpConnection(url)
     this.queues = config.queues
   }
 

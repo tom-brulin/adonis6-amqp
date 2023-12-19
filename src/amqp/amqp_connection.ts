@@ -1,6 +1,6 @@
 import { Connection, connect } from 'amqplib'
 
-export class AmpqConnection {
+export class AmqpConnection {
   #connection: Connection | null = null
   #connectionPromise: Promise<Connection> | null = null
 
