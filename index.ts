@@ -6,7 +6,7 @@ export { AmqpMessage } from './src/amqp/amqp_message.js'
 export { AmqpService } from './src/amqp/amqp_service.js'
 export { QueueHandler } from './src/amqp/queue_handler.js'
 
-export { default } from './src/services/amqp.js'
+export { default as amqp } from './src/services/amqp.js'
 
 export { configure } from './configure.js'
 export { stubsRoot } from './stubs/main.js'
