@@ -29,7 +29,7 @@ export default class AmqpProvider {
     /**
      * Register and boot AMQP Manager
      */
-    const amqpManager = new AmqpManager(config)
+    const amqpManager = new AmqpManager<typeof config.queues>(config)
     this.app.container.singleton('amqp.manager', async () => {
       return amqpManager
     })
@@ -39,7 +39,7 @@ export default class AmqpProvider {
      * Register AMQP Service
      */
     this.app.container.singleton(AmqpService, async () => {
-      return new AmqpService(amqpManager)
+      return new AmqpService<typeof config.queues>(amqpManager)
     })
   }
 
