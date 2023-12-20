@@ -6,7 +6,7 @@
 
 ## Introduction
 
-AMQP provider for AdonisJS. Feel free to contribute or give suggestions.
+Typesafe AMQP provider for AdonisJS 6. Feel free to contribute or give suggestions.
 
 ## Quick setup
 
@@ -28,7 +28,7 @@ node ace configure adonis6-amqp
 
 ## Setup
 
-Once installed, you can configure Adonis6 AMQP in you application inside `config/amqp.ts`
+Once installed, you can configure Adonis6 AMQP in you application inside `config/amqp.ts`.
 
 ```typescript
 const amqpConfig = defineConfig({
@@ -37,21 +37,32 @@ const amqpConfig = defineConfig({
     port: env.get('AMQP_PORT'),
     user: env.get('AMQP_USER'),
     password: env.get('AMQP_PASSWORD'),
-  },
-  queues: {
-    /*
-    'your.queue': {
-      validator: yourValidator,
-      handler: yourQueueHandler,
-    },
-    */
-  },
+  }
 })
+
+declare module 'adonis6-amqp' {
+  interface AmqpQueues {
+    // 'your.queue': Infer<typeof yourValidator>
+  }
+}
 ```
 
 ### Create a queue
 
-Each queues need a validator to validate incoming/outgoing data (you must use `vinejs` to create our validators).
+Define your queues inside `start/amqp.ts`.
+
+```typescript
+import { amqp } from 'adonis6-amqp'
+
+export const yourQueue = await amqp
+  .createQueue('your.queue', yourValidator)
+  .useHandler(YourHandler) // Optional
+  .register()
+```
+
+#### Validator
+
+Each queues need a validator to validate incoming/outgoing data (you must use `vinejs` to create queue validators).
 
 ```typescript
 import vine from '@vinejs/vine'
@@ -63,7 +74,9 @@ export const yourValidator = vine.compile(
 )
 ```
 
-If you want to listen on the queue you can create a queue handler.
+#### Handler
+
+If you want to listen on the queue you need to create a queue handler.
 
 ```typescript
 import { Infer } from '@vinejs/vine/types'
@@ -77,12 +90,13 @@ export class YourHandler extends QueueHandler {
 
 ### Send message to queue
 
-To send message to queue you need to use `AmqpService` provided in the IoC.
+Just import the queue you registered where you want to send a message.
 
 ```typescript
-const amqpService = await app.container.make(AmqpService)
+import { yourQueue } from '#start/amqp'
 
-amqpService.sendToQueue('queue.name', { someData: '' })
+// Typesafe
+yourQueue.sendMessage({ randomString: 'test' })
 ```
 
 ## License
