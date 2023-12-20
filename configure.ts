@@ -9,10 +9,16 @@ export async function configure(command: Configure) {
   await command.publishStub('config.stub', {})
 
   /**
-   * Publish provider
+   * Publish start file
    */
-  await codemods.updateRcFile((rcFile: any) => {
+  await command.publishStub('start.stub', {})
+
+  /**
+   * Publish provider and start file
+   */
+  await codemods.updateRcFile((rcFile) => {
     rcFile.addProvider('adonis6-amqp/amqp_provider')
+    rcFile.addPreloadFile('#start/amqp')
   })
 
   /**

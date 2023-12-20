@@ -40,6 +40,7 @@ test.group('Configure', (group) => {
     await command.exec()
 
     await assert.fileExists('config/amqp.ts')
+    await assert.fileExists('start/amqp.ts')
     await assert.fileExists('adonisrc.ts')
     await assert.fileContains('adonisrc.ts', 'adonis6-amqp/amqp_provider')
     await assert.fileContains('config/amqp.ts', 'defineConfig')

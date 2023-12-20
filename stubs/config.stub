@@ -11,15 +11,7 @@ const amqpConfig = defineConfig({
     port: env.get('AMQP_PORT'),
     user: env.get('AMQP_USER'),
     password: env.get('AMQP_PASSWORD'),
-  },
-  queues: {
-    /*
-    'your.queue': {
-      validator: yourValidator,
-      handler: yourQueueHandler,
-    },
-    */
-  },
+  }
 })
 
 export default amqpConfig

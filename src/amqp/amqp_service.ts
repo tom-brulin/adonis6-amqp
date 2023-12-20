@@ -1,29 +1,12 @@
-import { Options } from 'amqplib'
-import { Queue } from '../types.js'
-import { Infer } from '@vinejs/vine/types'
+import { VineValidator } from '@vinejs/vine'
 import { AmqpManager } from './amqp_manager.js'
+import { AmqpQueues } from './amqp_queues.js'
+import { AmqpQueue } from './amqp_queue.js'
 
-export class AmqpService<KnownQueues extends Record<string, Queue>> {
-  constructor(private readonly amqpManager: AmqpManager<KnownQueues>) {}
+export class AmqpService {
+  constructor(private readonly amqpManager: AmqpManager) {}
 
-  async sendToQueue(
-    queueName: keyof KnownQueues,
-    content: Infer<KnownQueues[typeof queueName]['validator']>,
-    options?: Options.Publish
-  ): Promise<boolean> {
-    const queue = this.amqpManager.queues[queueName]
-
-    if (!queue) {
-      throw new Error(`Queue ${queueName.toString()} is not defined`)
-    }
-
-    try {
-      const payload = await queue.validator.validate(content)
-      const channel = await this.amqpManager.getOrCreateChannel()
-
-      return channel.sendToQueue(queueName.toString(), this.amqpManager.toBuffer(payload), options)
-    } catch (_) {
-      return false
-    }
+  createQueue(queueName: keyof AmqpQueues, validator: VineValidator<any, any>) {
+    return new AmqpQueue(queueName, validator, this.amqpManager)
   }
 }
