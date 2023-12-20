@@ -28,7 +28,7 @@ node ace configure adonis6-amqp
 
 ## Setup
 
-Once installed, you can configure Adonis6 AMQP in you application inside `config/amqp.ts`.
+Once installed, you can configure Adonis6 AMQP in your application inside `config/amqp.ts`.
 
 ```typescript
 const amqpConfig = defineConfig({
