@@ -79,11 +79,10 @@ export const yourValidator = vine.compile(
 If you want to listen on the queue you need to create a queue handler.
 
 ```typescript
-import { Infer } from '@vinejs/vine/types'
-import { QueueHandler } from 'adonis6-amqp'
+import { AmqpQueues, QueueHandler } from 'adonis6-amqp'
 
 export class YourHandler extends QueueHandler {
-  handle(data: Infer<typeof yourValidator>) { }
+  handle(data: AmqpQueues['your.queue']) { }
   handleError(error: Error) { }
 }
 ```
