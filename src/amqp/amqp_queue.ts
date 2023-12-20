@@ -6,26 +6,26 @@ import { Infer } from '@vinejs/vine/types'
 import { Options } from 'amqplib'
 
 export class AmqpQueue {
-  #name: string
-  #validator: VineValidator<any, any>
-  #handler?: typeof QueueHandler
+  private name: string
+  private validator: VineValidator<any, any>
+  private handler?: typeof QueueHandler
 
   constructor(
     name: keyof AmqpQueues,
     validator: VineValidator<any, any>,
     private readonly amqpManager: AmqpManager
   ) {
-    this.#name = name
-    this.#validator = validator
+    this.name = name
+    this.validator = validator
   }
 
   useHandler(queueHandler: typeof QueueHandler) {
-    this.#handler = queueHandler
+    this.handler = queueHandler
     return this
   }
 
   async register() {
-    await this.amqpManager.registerQueue(this)
+    await this.amqpManager.registerQueue(this.name, this.validator, this.handler)
     return this
   }
 
@@ -41,18 +41,6 @@ export class AmqpQueue {
     } catch (_) {
       return false
     }
-  }
-
-  get name() {
-    return this.#name
-  }
-
-  get validator() {
-    return this.#validator
-  }
-
-  get handler() {
-    return this.#handler
   }
 
   private toBuffer(content: any) {
