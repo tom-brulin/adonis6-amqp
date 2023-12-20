@@ -1,3 +1,11 @@
 {{{
   exports({ to: app.startPath('amqp.ts') })
 }}}
+/*
+ * import { amqp } from 'adonis6-amqp'
+ *
+ * export const yourQueue = await amqp
+ *   .createQueue('your.queue', yourValidator)
+ * .useHandler(YourHandler) // Optional
+ * .register()
+ */

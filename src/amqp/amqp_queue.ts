@@ -2,17 +2,20 @@ import { VineValidator } from '@vinejs/vine'
 import { QueueHandler } from './queue_handler.js'
 import { AmqpQueues } from './amqp_queues.js'
 import { AmqpManager } from './amqp_manager.js'
-import { Infer } from '@vinejs/vine/types'
 import { Options } from 'amqplib'
+import { Infer, SchemaTypes } from '@vinejs/vine/types'
 
-export class AmqpQueue {
-  private name: string
-  private validator: VineValidator<any, any>
+export class AmqpQueue<
+  Schema extends SchemaTypes,
+  MetaData extends Record<string, any> | undefined,
+> {
+  private name: keyof AmqpQueues
+  private validator: VineValidator<Schema, MetaData>
   private handler?: typeof QueueHandler
 
   constructor(
     name: keyof AmqpQueues,
-    validator: VineValidator<any, any>,
+    validator: VineValidator<Schema, MetaData>,
     private readonly amqpManager: AmqpManager
   ) {
     this.name = name
@@ -20,7 +23,9 @@ export class AmqpQueue {
   }
 
   useHandler(queueHandler: typeof QueueHandler) {
-    this.handler = queueHandler
+    if (!this.handler) {
+      this.handler = queueHandler
+    }
     return this
   }
 
@@ -31,9 +36,10 @@ export class AmqpQueue {
 
   async sendMessage(
     content: Infer<typeof this.validator>,
-    options: Options.Publish
+    options?: Options.Publish
   ): Promise<boolean> {
     try {
+      // @ts-expect-error Can't find out why I am getting this type error
       const payload = await this.validator.validate(content)
       const channel = await this.amqpManager.getOrCreateChannel()
 

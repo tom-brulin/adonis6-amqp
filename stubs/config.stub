@@ -15,3 +15,9 @@ const amqpConfig = defineConfig({
 })
 
 export default amqpConfig
+
+declare module 'adonis6-amqp' {
+  interface AmqpQueues {
+    // 'your.queue': Infer<typeof yourValidator>
+  }
+}

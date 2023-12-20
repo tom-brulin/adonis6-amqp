@@ -1,7 +1,6 @@
 import { Channel, Options } from 'amqplib'
 import { AmqpConfig } from '../types.js'
 import { AmqpConnection } from './amqp_connection.js'
-import { AmqpQueue } from './amqp_queue.js'
 import { AmqpMessage } from './amqp_message.js'
 import app from '@adonisjs/core/services/app'
 import { VineValidator, errors as vineErrors } from '@vinejs/vine'
