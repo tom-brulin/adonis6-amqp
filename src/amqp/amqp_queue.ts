@@ -35,7 +35,7 @@ export class AmqpQueue<
   }
 
   async sendMessage(
-    content: Infer<typeof this.validator>,
+    content: Infer<VineValidator<Schema, MetaData>>,
     options?: Options.Publish
   ): Promise<boolean> {
     try {
